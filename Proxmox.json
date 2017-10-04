@@ -8,49 +8,87 @@
 "hideControls": false,
 "id": 1,
 "links": [],
-"refresh": false,
+"refresh": "1m",
 "rows": [
 {
 "collapse": false,
-"height": "250px",
+"height": 263,
 "panels": [
 {
-"aliasColors": {},
-"bars": false,
-"dashLength": 10,
-"dashes": false,
-"datasource": "Proxmox",
-"decimals": 2,
-"fill": 1,
-"id": 1,
-"interval": "",
-"legend": {
-"alignAsTable": true,
-"avg": false,
-"current": true,
-"max": true,
-"min": false,
-"rightSide": true,
-"show": true,
-"total": false,
-"values": true
-},
-"lines": true,
-"linewidth": 1,
+"content": "<img src=https://www.geonov.fr/img/actualites/proxmox.png>",
+"id": 9,
 "links": [],
-"nullPointMode": "connected",
-"percentage": false,
-"pointradius": 5,
-"points": false,
-"renderer": "flot",
-"seriesOverrides": [],
-"spaceLength": 10,
+"mode": "html",
+"span": 2,
+"title": "",
+"type": "text"
+},
+{
+"content": "<table style=\"width:100%\">\n  <tr>     <th>Case</th>  <td>Intel NUC7i5BNK</td> </tr>\n<tr>\n    \n<th>CPU</th>\n <td>Intel(R) Core(TM) i3-7100U CPU @ 2.40GHz</td>\n</tr>\n \n <tr>\n    \n<th>Memory</th>\n    \n<td>2x Crucial CT16G4SFD8213</td> \n  \n</tr>\n  \n<tr>\n    \n<th>Storage</th>\n    \n<td>WD Blue SSD M.2 500GB</td> \n  \n</tr>\n\n<tr>     \n<th>Software</th>     \n<td>Proxmox 5.0-32 (running kernel: 4.10.17-2-pve)</td>    \n</tr> \n</table>",
+"id": 7,
+"links": [],
+"mode": "html",
 "span": 6,
-"stack": false,
-"steppedLine": false,
+"title": "Cluster info",
+"type": "text"
+},
+{
+"cacheTimeout": null,
+"colorBackground": false,
+"colorValue": false,
+"colors": [
+"rgba(245, 54, 54, 0.9)",
+"rgba(237, 129, 40, 0.89)",
+"rgba(50, 172, 45, 0.97)"
+],
+"datasource": "Proxmox",
+"decimals": null,
+"format": "percent",
+"gauge": {
+"maxValue": 100,
+"minValue": 0,
+"show": true,
+"thresholdLabels": false,
+"thresholdMarkers": true
+},
+"id": 10,
+"interval": null,
+"links": [],
+"mappingType": 1,
+"mappingTypes": [
+{
+"name": "value to text",
+"value": 1
+},
+{
+"name": "range to text",
+"value": 2
+}
+],
+"maxDataPoints": 100,
+"nullPointMode": "connected",
+"nullText": null,
+"postfix": "",
+"postfixFontSize": "50%",
+"prefix": "",
+"prefixFontSize": "50%",
+"rangeMaps": [
+{
+"from": "null",
+"text": "N/A",
+"to": "null"
+}
+],
+"span": 4,
+"sparkline": {
+"fillColor": "rgba(189, 62, 31, 0)",
+"full": false,
+"lineColor": "rgb(31, 120, 193)",
+"show": true
+},
+"tableColumn": "",
 "targets": [
 {
-"alias": "$tag_host",
 "dsType": "influxdb",
 "groupBy": [
 {
@@ -58,12 +96,6 @@
 "1m"
 ],
 "type": "time"
-},
-{
-"params": [
-"host"
-],
-"type": "tag"
 },
 {
 "params": [
@@ -75,6 +107,8 @@
 "measurement": "cpustat",
 "orderByTime": "ASC",
 "policy": "default",
+"query": "SELECT mean(\"cpu\") *100 FROM \"cpustat\" WHERE (\"host\" = 'pve01') AND $timeFilter GROUP BY time(1m), \"host\" fill(null)\n",
+"rawQuery": false,
 "refId": "A",
 "resultFormat": "time_series",
 "select": [
@@ -106,44 +140,31 @@
 ]
 }
 ],
-"thresholds": [],
-"timeFrom": null,
-"timeShift": null,
-"title": "PVE01 - CPU",
-"tooltip": {
-"shared": true,
-"sort": 0,
-"value_type": "individual"
-},
-"type": "graph",
-"xaxis": {
-"buckets": null,
-"mode": "time",
-"name": null,
-"show": true,
-"values": []
-},
-"yaxes": [
+"thresholds": "100,75,50",
+"title": "CPU",
+"type": "singlestat",
+"valueFontSize": "80%",
+"valueMaps": [
 {
-"decimals": null,
-"format": "percent",
-"label": "",
-"logBase": 1,
-"max": null,
-"min": null,
-"show": true
-},
-{
-"decimals": null,
-"format": "short",
-"label": null,
-"logBase": 1,
-"max": null,
-"min": null,
-"show": false
+"op": "=",
+"text": "N/A",
+"value": "null"
 }
-]
+],
+"valueName": "current"
+}
+],
+"repeat": null,
+"repeatIteration": null,
+"repeatRowId": null,
+"showTitle": false,
+"title": "Dashboard Row",
+"titleSize": "h6"
 },
+{
+"collapse": false,
+"height": "250px",
+"panels": [
 {
 "aliasColors": {},
 "bars": false,
@@ -156,8 +177,8 @@
 "alignAsTable": true,
 "avg": false,
 "current": true,
-"max": false,
-"min": true,
+"max": true,
+"min": false,
 "rightSide": true,
 "show": true,
 "total": false,
@@ -178,7 +199,7 @@
 "steppedLine": false,
 "targets": [
 {
-"alias": "Total",
+"alias": "$tag_host",
 "dsType": "influxdb",
 "groupBy": [
 {
@@ -189,21 +210,22 @@
 },
 {
 "params": [
-"none"
+"null"
 ],
 "type": "fill"
 }
 ],
-"measurement": "memory",
 "orderByTime": "ASC",
 "policy": "default",
+"query": "SELECT mean(\"memused\")/mean(\"memtotal\") *100 AS used FROM \"memory\" WHERE \"host\" = 'pve01' AND $timeFilter GROUP BY time($__interval), \"host\" fill(null)",
+"rawQuery": true,
 "refId": "A",
 "resultFormat": "time_series",
 "select": [
 [
 {
 "params": [
-"memtotal"
+"value"
 ],
 "type": "field"
 },
@@ -213,59 +235,7 @@
 }
 ]
 ],
-"tags": [
-{
-"key": "host",
-"operator": "=",
-"value": "pve01"
-}
-]
-},
-{
-"alias": "Used",
-"dsType": "influxdb",
-"groupBy": [
-{
-"params": [
-"$__interval"
-],
-"type": "time"
-},
-{
-"params": [
-"none"
-],
-"type": "fill"
-}
-],
-"measurement": "memory",
-"orderByTime": "ASC",
-"policy": "default",
-"query": "SELECT mean(\"memfree\") FROM \"memory\" WHERE (\"host\" = 'pve01') AND $timeFilter GROUP BY time($__interval) fill(none)",
-"rawQuery": false,
-"refId": "C",
-"resultFormat": "time_series",
-"select": [
-[
-{
-"params": [
-"memused"
-],
-"type": "field"
-},
-{
-"params": [],
-"type": "mean"
-}
-]
-],
-"tags": [
-{
-"key": "host",
-"operator": "=",
-"value": "pve01"
-}
-]
+"tags": []
 }
 ],
 "thresholds": [],
@@ -287,7 +257,168 @@
 },
 "yaxes": [
 {
-"format": "bytes",
+"decimals": 0,
+"format": "percent",
+"label": "",
+"logBase": 1,
+"max": null,
+"min": null,
+"show": true
+},
+{
+"format": "short",
+"label": null,
+"logBase": 1,
+"max": null,
+"min": null,
+"show": true
+}
+]
+},
+{
+"aliasColors": {},
+"bars": false,
+"dashLength": 10,
+"dashes": false,
+"datasource": null,
+"fill": 1,
+"id": 11,
+"legend": {
+"avg": false,
+"current": false,
+"max": false,
+"min": false,
+"show": true,
+"total": false,
+"values": false
+},
+"lines": true,
+"linewidth": 1,
+"links": [],
+"nullPointMode": "null",
+"percentage": false,
+"pointradius": 5,
+"points": false,
+"renderer": "flot",
+"seriesOverrides": [],
+"spaceLength": 10,
+"span": 6,
+"stack": false,
+"steppedLine": false,
+"targets": [
+{
+"alias": "$tag_host - $col",
+"dsType": "influxdb",
+"groupBy": [
+{
+"params": [
+"$__interval"
+],
+"type": "time"
+},
+{
+"params": [
+"host"
+],
+"type": "tag"
+},
+{
+"params": [
+"null"
+],
+"type": "fill"
+}
+],
+"measurement": "nics",
+"orderByTime": "ASC",
+"policy": "default",
+"refId": "A",
+"resultFormat": "time_series",
+"select": [
+[
+{
+"params": [
+"receive"
+],
+"type": "field"
+},
+{
+"params": [],
+"type": "mean"
+},
+{
+"params": [
+"10s"
+],
+"type": "non_negative_derivative"
+},
+{
+"params": [
+"Rx"
+],
+"type": "alias"
+}
+],
+[
+{
+"params": [
+"transmit"
+],
+"type": "field"
+},
+{
+"params": [],
+"type": "mean"
+},
+{
+"params": [
+"10s"
+],
+"type": "non_negative_derivative"
+},
+{
+"params": [
+"Tx"
+],
+"type": "alias"
+}
+]
+],
+"tags": [
+{
+"key": "host",
+"operator": "=",
+"value": "pve01"
+},
+{
+"condition": "AND",
+"key": "instance",
+"operator": "=",
+"value": "eno1"
+}
+]
+}
+],
+"thresholds": [],
+"timeFrom": null,
+"timeShift": null,
+"title": "PVE01 - Traffic",
+"tooltip": {
+"shared": true,
+"sort": 0,
+"value_type": "individual"
+},
+"type": "graph",
+"xaxis": {
+"buckets": null,
+"mode": "time",
+"name": null,
+"show": true,
+"values": []
+},
+"yaxes": [
+{
+"format": "bps",
 "label": null,
 "logBase": 1,
 "max": null,
@@ -352,18 +483,24 @@
 "steppedLine": false,
 "targets": [
 {
-"alias": "Grafana",
+"alias": "$tag_host",
 "dsType": "influxdb",
 "groupBy": [
 {
 "params": [
-"1m"
+"$__interval"
 ],
 "type": "time"
 },
 {
 "params": [
-"none"
+"host"
+],
+"type": "tag"
+},
+{
+"params": [
+"null"
 ],
 "type": "fill"
 }
@@ -371,7 +508,7 @@
 "measurement": "system",
 "orderByTime": "ASC",
 "policy": "default",
-"refId": "A",
+"refId": "E",
 "resultFormat": "time_series",
 "select": [
 [
@@ -387,7 +524,7 @@
 },
 {
 "params": [
-"*1000"
+" * 100"
 ],
 "type": "math"
 }
@@ -395,109 +532,9 @@
 ],
 "tags": [
 {
-"key": "vmid",
+"key": "object",
 "operator": "=",
-"value": "100"
-}
-]
-},
-{
-"alias": "InfluxDB",
-"dsType": "influxdb",
-"groupBy": [
-{
-"params": [
-"1m"
-],
-"type": "time"
-},
-{
-"params": [
-"none"
-],
-"type": "fill"
-}
-],
-"measurement": "system",
-"orderByTime": "ASC",
-"policy": "default",
-"refId": "B",
-"resultFormat": "time_series",
-"select": [
-[
-{
-"params": [
-"cpu"
-],
-"type": "field"
-},
-{
-"params": [],
-"type": "mean"
-},
-{
-"params": [
-"*1000"
-],
-"type": "math"
-}
-]
-],
-"tags": [
-{
-"key": "vmid",
-"operator": "=",
-"value": "101"
-}
-]
-},
-{
-"alias": "Telegraf",
-"dsType": "influxdb",
-"groupBy": [
-{
-"params": [
-"1m"
-],
-"type": "time"
-},
-{
-"params": [
-"none"
-],
-"type": "fill"
-}
-],
-"measurement": "system",
-"orderByTime": "ASC",
-"policy": "default",
-"refId": "C",
-"resultFormat": "time_series",
-"select": [
-[
-{
-"params": [
-"cpu"
-],
-"type": "field"
-},
-{
-"params": [],
-"type": "mean"
-},
-{
-"params": [
-"*1000"
-],
-"type": "math"
-}
-]
-],
-"tags": [
-{
-"key": "vmid",
-"operator": "=",
-"value": "102"
+"value": "lxc"
 }
 ]
 }
@@ -531,6 +568,129 @@
 {
 "format": "short",
 "label": null,
+"logBase": 1,
+"max": null,
+"min": null,
+"show": true
+}
+]
+},
+{
+"aliasColors": {},
+"bars": false,
+"dashLength": 10,
+"dashes": false,
+"datasource": null,
+"fill": 1,
+"id": 13,
+"legend": {
+"alignAsTable": true,
+"avg": false,
+"current": true,
+"max": true,
+"min": false,
+"rightSide": true,
+"show": true,
+"total": false,
+"values": true
+},
+"lines": true,
+"linewidth": 1,
+"links": [],
+"nullPointMode": "null",
+"percentage": false,
+"pointradius": 5,
+"points": false,
+"renderer": "flot",
+"seriesOverrides": [],
+"spaceLength": 10,
+"span": 6,
+"stack": false,
+"steppedLine": false,
+"targets": [
+{
+"alias": "$tag_host",
+"dsType": "influxdb",
+"groupBy": [
+{
+"params": [
+"$__interval"
+],
+"type": "time"
+},
+{
+"params": [
+"host"
+],
+"type": "tag"
+},
+{
+"params": [
+"null"
+],
+"type": "fill"
+}
+],
+"orderByTime": "ASC",
+"policy": "default",
+"query": "SELECT mean(\"mem\")*100 /mean(\"maxmem\") AS used FROM \"system\" WHERE \"object\" = 'qemu' OR \"object\" = 'lxc' AND $timeFilter GROUP BY time($__interval), \"host\" fill(null)",
+"rawQuery": true,
+"refId": "A",
+"resultFormat": "time_series",
+"select": [
+[
+{
+"params": [
+"value"
+],
+"type": "field"
+},
+{
+"params": [],
+"type": "mean"
+},
+{
+"params": [
+" / 100"
+],
+"type": "math"
+}
+]
+],
+"tags": []
+}
+],
+"thresholds": [],
+"timeFrom": null,
+"timeShift": null,
+"title": "LXC Memory",
+"tooltip": {
+"shared": true,
+"sort": 0,
+"value_type": "individual"
+},
+"type": "graph",
+"xaxis": {
+"buckets": null,
+"mode": "time",
+"name": null,
+"show": true,
+"values": []
+},
+"yaxes": [
+{
+"decimals": 0,
+"format": "percent",
+"label": null,
+"logBase": 1,
+"max": null,
+"min": null,
+"show": true
+},
+{
+"decimals": null,
+"format": "short",
+"label": "",
 "logBase": 1,
 "max": null,
 "min": null,
@@ -584,7 +744,7 @@
 "steppedLine": false,
 "targets": [
 {
-"alias": "Grafana",
+"alias": "$tag_host",
 "dsType": "influxdb",
 "groupBy": [
 {
@@ -592,6 +752,12 @@
 "1m"
 ],
 "type": "time"
+},
+{
+"params": [
+"host"
+],
+"type": "tag"
 },
 {
 "params": [
@@ -603,7 +769,9 @@
 "measurement": "system",
 "orderByTime": "ASC",
 "policy": "default",
-"refId": "A",
+"query": "SELECT non_negative_derivative(mean(\"netin\"), 10s) FROM \"system\" WHERE (\"object\" = 'lxc') AND $timeFilter GROUP BY time(1m), \"host\" fill(null)",
+"rawQuery": true,
+"refId": "E",
 "resultFormat": "time_series",
 "select": [
 [
@@ -627,109 +795,9 @@
 ],
 "tags": [
 {
-"key": "vmid",
+"key": "object",
 "operator": "=",
-"value": "100"
-}
-]
-},
-{
-"alias": "InfluxDB",
-"dsType": "influxdb",
-"groupBy": [
-{
-"params": [
-"1m"
-],
-"type": "time"
-},
-{
-"params": [
-"null"
-],
-"type": "fill"
-}
-],
-"measurement": "system",
-"orderByTime": "ASC",
-"policy": "default",
-"refId": "B",
-"resultFormat": "time_series",
-"select": [
-[
-{
-"params": [
-"netin"
-],
-"type": "field"
-},
-{
-"params": [],
-"type": "mean"
-},
-{
-"params": [
-"10s"
-],
-"type": "non_negative_derivative"
-}
-]
-],
-"tags": [
-{
-"key": "vmid",
-"operator": "=",
-"value": "101"
-}
-]
-},
-{
-"alias": "Telegraf",
-"dsType": "influxdb",
-"groupBy": [
-{
-"params": [
-"1m"
-],
-"type": "time"
-},
-{
-"params": [
-"null"
-],
-"type": "fill"
-}
-],
-"measurement": "system",
-"orderByTime": "ASC",
-"policy": "default",
-"refId": "C",
-"resultFormat": "time_series",
-"select": [
-[
-{
-"params": [
-"netin"
-],
-"type": "field"
-},
-{
-"params": [],
-"type": "mean"
-},
-{
-"params": [
-"10s"
-],
-"type": "non_negative_derivative"
-}
-]
-],
-"tags": [
-{
-"key": "vmid",
-"operator": "=",
-"value": "102"
+"value": "lxc"
 }
 ]
 }
@@ -804,7 +872,7 @@
 "steppedLine": false,
 "targets": [
 {
-"alias": "Grafana",
+"alias": "$tag_host",
 "dsType": "influxdb",
 "groupBy": [
 {
@@ -812,6 +880,12 @@
 "1m"
 ],
 "type": "time"
+},
+{
+"params": [
+"host"
+],
+"type": "tag"
 },
 {
 "params": [
@@ -823,6 +897,8 @@
 "measurement": "system",
 "orderByTime": "ASC",
 "policy": "default",
+"query": "SELECT non_negative_derivative(mean(\"netin\"), 10s) FROM \"system\" WHERE (\"object\" = 'lxc') AND $timeFilter GROUP BY time(1m), \"host\" fill(null)",
+"rawQuery": false,
 "refId": "A",
 "resultFormat": "time_series",
 "select": [
@@ -847,109 +923,9 @@
 ],
 "tags": [
 {
-"key": "vmid",
+"key": "object",
 "operator": "=",
-"value": "100"
-}
-]
-},
-{
-"alias": "InfluxDB",
-"dsType": "influxdb",
-"groupBy": [
-{
-"params": [
-"1m"
-],
-"type": "time"
-},
-{
-"params": [
-"null"
-],
-"type": "fill"
-}
-],
-"measurement": "system",
-"orderByTime": "ASC",
-"policy": "default",
-"refId": "B",
-"resultFormat": "time_series",
-"select": [
-[
-{
-"params": [
-"netout"
-],
-"type": "field"
-},
-{
-"params": [],
-"type": "mean"
-},
-{
-"params": [
-"10s"
-],
-"type": "non_negative_derivative"
-}
-]
-],
-"tags": [
-{
-"key": "vmid",
-"operator": "=",
-"value": "101"
-}
-]
-},
-{
-"alias": "Telegraf",
-"dsType": "influxdb",
-"groupBy": [
-{
-"params": [
-"1m"
-],
-"type": "time"
-},
-{
-"params": [
-"null"
-],
-"type": "fill"
-}
-],
-"measurement": "system",
-"orderByTime": "ASC",
-"policy": "default",
-"refId": "C",
-"resultFormat": "time_series",
-"select": [
-[
-{
-"params": [
-"netout"
-],
-"type": "field"
-},
-{
-"params": [],
-"type": "mean"
-},
-{
-"params": [
-"10s"
-],
-"type": "non_negative_derivative"
-}
-]
-],
-"tags": [
-{
-"key": "vmid",
-"operator": "=",
-"value": "102"
+"value": "lxc"
 }
 ]
 }
@@ -1035,6 +1011,6 @@
 ]
 },
 "timezone": "",
-"title": "Proxmox",
-"version": 5
+"title": "NUC7i5 PVE Cluster",
+"version": 17
 }
